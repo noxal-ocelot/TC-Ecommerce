@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TCEcommerce.HttpApi.Client.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TCEcommerce.DbMigrator", "src\TCEcommerce.DbMigrator\TCEcommerce.DbMigrator.csproj", "{AA94D832-1CCC-4715-95A9-A483F23A1A5D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "identity", "identity", "{6D77ACC7-0EB4-44BE-B1F2-8C9CE9038173}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "auth", "auth", "{6D77ACC7-0EB4-44BE-B1F2-8C9CE9038173}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{D405646C-422F-49B6-B5BF-5800338F7BB5}"
 EndProject
