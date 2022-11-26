@@ -1,12 +1,12 @@
-﻿namespace TCEcommerce.Enums.Products
+﻿namespace TeduEcommerce.Enums.Products
 {
     public enum ProductType
     {
-        SIMPLE,
-        GROUPED,
-        CONFIGURABLE,
-        VIRTUAL,
-        BUNDLE,
-        DOWNLOADABLE
+        Simple,
+        Grouped,
+        Configurable,
+        Bundle,
+        Virtual,
+        Downloadable,
     }
 }
