@@ -1,7 +1,7 @@
 ﻿using System;
 using Volo.Abp.Domain.Entities;
 
-namespace TeduEcommerce.Promotions
+namespace TCEcommerce.Promotions
 {
     public class PromotionProduct : Entity<Guid>
     {

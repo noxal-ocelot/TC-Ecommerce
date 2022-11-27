@@ -1,4 +1,4 @@
-﻿namespace TeduEcommerce.Enums.Promotions
+﻿namespace TCEcommerce.Enums.Promotions
 {
     public enum DiscountUnit
     {

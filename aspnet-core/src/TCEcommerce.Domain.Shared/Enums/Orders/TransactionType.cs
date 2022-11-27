@@ -1,4 +1,4 @@
-﻿namespace TeduEcommerce.Enums.Orders
+﻿namespace TCEcommerce.Enums.Orders
 {
     public enum TransactionType
     {

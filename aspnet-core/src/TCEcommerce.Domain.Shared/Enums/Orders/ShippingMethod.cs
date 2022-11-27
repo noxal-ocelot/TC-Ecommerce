@@ -1,4 +1,4 @@
-﻿namespace TeduEcommerce.Orders
+﻿namespace TCEcommerce.Enums.Orders
 {
     public enum ShippingMethod
     {

@@ -1,8 +1,8 @@
 ﻿using System;
-using TeduEcommerce.Enums.InventoryTickets;
+using TCEcommerce.Enums.InventoryTickets;
 using Volo.Abp.Domain.Entities.Auditing;
 
-namespace TeduEcommerce.InventoryTickets
+namespace TCEcommerce.InventoryTickets
 {
     public class InventoryTicket : AuditedAggregateRoot<Guid>
     {

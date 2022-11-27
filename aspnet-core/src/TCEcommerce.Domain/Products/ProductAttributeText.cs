@@ -1,7 +1,7 @@
 ﻿using System;
 using Volo.Abp.Domain.Entities;
 
-namespace TeduEcommerce.Products
+namespace TCEcommerce.Products
 {
     public class ProductAttributeText : Entity<Guid>
     {
