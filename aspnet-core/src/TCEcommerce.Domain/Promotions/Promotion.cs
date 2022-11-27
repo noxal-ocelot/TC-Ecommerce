@@ -1,8 +1,8 @@
 ﻿using System;
-using TeduEcommerce.Enums.Promotions;
+using TCEcommerce.Enums.Promotions;
 using Volo.Abp.Domain.Entities.Auditing;
 
-namespace TeduEcommerce.Promotions
+namespace TCEcommerce.Promotions
 {
     public class Promotion : AuditedAggregateRoot<Guid>
     {

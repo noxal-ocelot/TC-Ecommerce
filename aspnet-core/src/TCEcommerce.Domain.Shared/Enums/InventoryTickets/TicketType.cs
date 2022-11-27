@@ -1,4 +1,4 @@
-﻿namespace TeduEcommerce.Enums.InventoryTickets
+﻿namespace TCEcommerce.Enums.InventoryTickets
 {
     public enum TicketType
     {

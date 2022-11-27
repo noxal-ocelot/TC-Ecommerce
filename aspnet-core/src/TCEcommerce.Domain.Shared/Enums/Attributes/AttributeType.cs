@@ -1,4 +1,4 @@
-﻿namespace TeduEcommerce.Enums.Attributes
+﻿namespace TCEcommerce.Enums.Attributes
 {
     public enum AttributeType
     {

@@ -1,8 +1,8 @@
 ﻿using System;
-using TeduEcommerce.Enums.Orders;
+using TCEcommerce.Enums.Orders;
 using Volo.Abp.Domain.Entities.Auditing;
 
-namespace TeduEcommerce.Orders
+namespace TCEcommerce.Orders
 {
     public class Order : FullAuditedAggregateRoot<Guid>
     {

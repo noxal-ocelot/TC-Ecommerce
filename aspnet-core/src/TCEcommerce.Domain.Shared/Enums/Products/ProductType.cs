@@ -1,4 +1,4 @@
-﻿namespace TeduEcommerce.Enums.Products
+﻿namespace TCEcommerce.Enums.Products
 {
     public enum ProductType
     {

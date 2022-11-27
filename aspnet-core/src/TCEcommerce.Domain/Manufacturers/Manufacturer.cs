@@ -1,7 +1,7 @@
 ﻿using System;
 using Volo.Abp.Domain.Entities.Auditing;
 
-namespace TeduEcommerce.Manufacturers
+namespace TCEcommerce.Manufacturers
 {
     public class Manufacturer : CreationAuditedAggregateRoot<Guid>
     {
