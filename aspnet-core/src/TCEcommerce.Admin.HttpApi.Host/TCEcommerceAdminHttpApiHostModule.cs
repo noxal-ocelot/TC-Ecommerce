@@ -229,7 +229,7 @@ public class TCEcommerceAdminHttpApiHostModule : AbpModule
 
             var configuration = context.GetConfiguration();
             options.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
-            options.OAuthScopes("TCEcommerce");
+            options.OAuthScopes("TCEcommerce.Admin");
         });
 
         app.UseAuditing();

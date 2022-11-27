@@ -6,21 +6,21 @@ export const environment = {
   production: false,
   application: {
     baseUrl,
-    name: 'TCEcommerce',
+    name: 'TCEcommerce Admin',
     logoUrl: '',
   },
   oAuthConfig: {
-    issuer: 'https://localhost:44362/',
+    issuer: 'https://localhost:5000/',
     redirectUri: baseUrl,
-    clientId: 'TCEcommerce_App',
+    clientId: 'TCEcommerce_Admin',
     responseType: 'code',
-    scope: 'offline_access TCEcommerce',
+    scope: 'offline_access TCEcommerce.Admin',
     requireHttps: true,
   },
   apis: {
     default: {
-      url: 'https://localhost:44340',
-      rootNamespace: 'TCEcommerce',
+      url: 'https://localhost:5001',
+      rootNamespace: 'TCEcommerce.Admin',
     },
   },
 } as Environment;
