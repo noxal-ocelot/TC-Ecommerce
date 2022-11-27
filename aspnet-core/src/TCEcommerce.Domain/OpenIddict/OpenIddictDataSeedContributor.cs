@@ -62,6 +62,19 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
                 }
             });
         }
+
+        if (await _scopeManager.FindByNameAsync("TCEcommerce.Admin") == null)
+        {
+            await _scopeManager.CreateAsync(new OpenIddictScopeDescriptor
+            {
+                Name = "TCEcommerce.Admin",
+                DisplayName = "TCEcommerce Admin API",
+                Resources =
+                {
+                    "TCEcommerce.Admin"
+                }
+            });
+        }
     }
 
     private async Task CreateApplicationsAsync()
@@ -72,9 +85,16 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
             OpenIddictConstants.Permissions.Scopes.Email,
             OpenIddictConstants.Permissions.Scopes.Phone,
             OpenIddictConstants.Permissions.Scopes.Profile,
-            OpenIddictConstants.Permissions.Scopes.Roles,
-            "TCEcommerce"
+            OpenIddictConstants.Permissions.Scopes.Roles
         };
+
+        var adminScopes = new List<string>();
+        adminScopes.AddRange(commonScopes);
+        adminScopes.Add("TCEcommerce.Admin");
+
+        var clientScopes = new List<string>();
+        clientScopes.AddRange(commonScopes);
+        clientScopes.Add("TCEcommerce");
 
         var configurationSection = _configuration.GetSection("OpenIddict:Applications");
 
@@ -97,102 +117,56 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
                     OpenIddictConstants.GrantTypes.AuthorizationCode,
                     OpenIddictConstants.GrantTypes.Implicit
                 },
-                scopes: commonScopes,
+                scopes: clientScopes,
                 redirectUri: $"{webClientRootUrl}signin-oidc",
                 clientUri: webClientRootUrl,
                 postLogoutRedirectUri: $"{webClientRootUrl}signout-callback-oidc"
             );
         }
 
-        //Console Test / Angular Client
-        var consoleAndAngularClientId = configurationSection["TCEcommerce_App:ClientId"];
-        if (!consoleAndAngularClientId.IsNullOrWhiteSpace())
+        //Admin Client
+        var adminWebClientId = configurationSection["TCEcommerce_Admin:ClientId"];
+        if (!adminWebClientId.IsNullOrWhiteSpace())
         {
-            var consoleAndAngularClientRootUrl = configurationSection["TCEcommerce_App:RootUrl"]?.TrimEnd('/');
+            var adminWebClientRootUrl = configurationSection["TCEcommerce_Admin:RootUrl"].TrimEnd('/');
+
+            /* TCEcommerce_Web client is only needed if you created a tiered
+             * solution. Otherwise, you can delete this client. */
             await CreateApplicationAsync(
-                name: consoleAndAngularClientId,
-                type: OpenIddictConstants.ClientTypes.Public,
-                consentType: OpenIddictConstants.ConsentTypes.Implicit,
-                displayName: "Console Test / Angular Application",
-                secret: null,
-                grantTypes: new List<string>
-                {
-                    OpenIddictConstants.GrantTypes.AuthorizationCode,
-                    OpenIddictConstants.GrantTypes.Password,
-                    OpenIddictConstants.GrantTypes.ClientCredentials,
-                    OpenIddictConstants.GrantTypes.RefreshToken
-                },
-                scopes: commonScopes,
-                redirectUri: consoleAndAngularClientRootUrl,
-                clientUri: consoleAndAngularClientRootUrl,
-                postLogoutRedirectUri: consoleAndAngularClientRootUrl
-            );
-        }
-
-        // Blazor Client
-        var blazorClientId = configurationSection["TCEcommerce_Blazor:ClientId"];
-        if (!blazorClientId.IsNullOrWhiteSpace())
-        {
-            var blazorRootUrl = configurationSection["TCEcommerce_Blazor:RootUrl"].TrimEnd('/');
-
-            await CreateApplicationAsync(
-                name: blazorClientId,
-                type: OpenIddictConstants.ClientTypes.Public,
-                consentType: OpenIddictConstants.ConsentTypes.Implicit,
-                displayName: "Blazor Application",
-                secret: null,
-                grantTypes: new List<string>
-                {
-                    OpenIddictConstants.GrantTypes.AuthorizationCode,
-                },
-                scopes: commonScopes,
-                redirectUri: $"{blazorRootUrl}/authentication/login-callback",
-                clientUri: blazorRootUrl,
-                postLogoutRedirectUri: $"{blazorRootUrl}/authentication/logout-callback"
-            );
-        }
-
-        // Blazor Server Tiered Client
-        var blazorServerTieredClientId = configurationSection["TCEcommerce_BlazorServerTiered:ClientId"];
-        if (!blazorServerTieredClientId.IsNullOrWhiteSpace())
-        {
-            var blazorServerTieredRootUrl = configurationSection["TCEcommerce_BlazorServerTiered:RootUrl"].EnsureEndsWith('/');
-
-            await CreateApplicationAsync(
-                name: blazorServerTieredClientId,
+                name: adminWebClientId,
                 type: OpenIddictConstants.ClientTypes.Confidential,
                 consentType: OpenIddictConstants.ConsentTypes.Implicit,
-                displayName: "Blazor Server Application",
-                secret: configurationSection["TCEcommerce_BlazorServerTiered:ClientSecret"] ?? "1q2w3e*",
+                displayName: "Admin Application",
+                secret: configurationSection["TCEcommerce_Admin:ClientSecret"] ?? "1q2w3e*",
                 grantTypes: new List<string> //Hybrid flow
                 {
-                    OpenIddictConstants.GrantTypes.AuthorizationCode,
+                    OpenIddictConstants.GrantTypes.Password,
+                    OpenIddictConstants.GrantTypes.RefreshToken,
                     OpenIddictConstants.GrantTypes.Implicit
                 },
-                scopes: commonScopes,
-                redirectUri: $"{blazorServerTieredRootUrl}signin-oidc",
-                clientUri: blazorServerTieredRootUrl,
-                postLogoutRedirectUri: $"{blazorServerTieredRootUrl}signout-callback-oidc"
+                scopes: adminScopes,
+                redirectUri: adminWebClientRootUrl,
+                clientUri: adminWebClientRootUrl,
+                postLogoutRedirectUri: adminWebClientRootUrl
             );
         }
 
-        // Swagger Client
-        var swaggerClientId = configurationSection["TCEcommerce_Swagger:ClientId"];
+        //Swagger Client
+        var swaggerClientId = configurationSection["TCEcommerce_Admin_Swagger:ClientId"];
         if (!swaggerClientId.IsNullOrWhiteSpace())
         {
-            var swaggerRootUrl = configurationSection["TCEcommerce_Swagger:RootUrl"].TrimEnd('/');
-
+            var swaggerRootUrl = configurationSection["TCEcommerce_Admin_Swagger:RootUrl"].TrimEnd('/');
             await CreateApplicationAsync(
                 name: swaggerClientId,
                 type: OpenIddictConstants.ClientTypes.Public,
                 consentType: OpenIddictConstants.ConsentTypes.Implicit,
-                displayName: "Swagger Application",
+                displayName: "Swagger Admin Application",
                 secret: null,
                 grantTypes: new List<string>
                 {
                     OpenIddictConstants.GrantTypes.AuthorizationCode,
                 },
-                scopes: commonScopes,
+                scopes: adminScopes,
                 redirectUri: $"{swaggerRootUrl}/swagger/oauth2-redirect.html",
                 clientUri: swaggerRootUrl
             );

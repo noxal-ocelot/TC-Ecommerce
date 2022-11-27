@@ -56,7 +56,7 @@ public class TCEcommerceAuthServerModule : AbpModule
         {
             builder.AddValidation(options =>
             {
-                options.AddAudiences("TCEcommerce");
+                options.AddAudiences("TCEcommerce, TCEcommerce.Admin");
                 options.UseLocalServer();
                 options.UseAspNetCore();
             });

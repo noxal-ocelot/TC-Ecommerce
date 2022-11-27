@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using TCEcommerce.Data;
 using Serilog;
 using Volo.Abp;
+using TCEcommerce.Seeding;
 
 namespace TCEcommerce.DbMigrator;
 
@@ -35,6 +36,11 @@ public class DbMigratorHostedService : IHostedService
                 .ServiceProvider
                 .GetRequiredService<TCEcommerceDbMigrationService>()
                 .MigrateAsync();
+
+            await application
+                .ServiceProvider
+                .GetRequiredService<IdentityDataSeeder>()
+                .SeedAsync("admin@tcecommerce.com", "123qwe");
 
             await application.ShutdownAsync();
 
